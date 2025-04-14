@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrick Fisher - Cyberpunk Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonPink: '#ff00ff',
+                        neonBlue: '#00ffff',
+                        neonGreen: '#00ff00',
+                        darkBlue: '#0a0b1c',
+                        deepBlue: '#050714'
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        sans: ['Roboto', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'neon-flicker': 'neon-flicker 2.5s infinite alternate',
+                        'text-scroll': 'text-scroll 20s linear infinite'
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0ff, 0 0 20px #0ff, 0 0 25px #0ff' },
+                            '100%': { textShadow: '0 0 5px #fff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff, 0 0 25px #0ff, 0 0 30px #0ff, 0 0 35px #0ff' }
+                        },
+                        'neon-flicker': {
+                            '0%, 18%, 22%, 25%, 53%, 57%, 100%': { 
+                                textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff00de, 0 0 20px #ff00de, 0 0 25px #ff00de'
+                            },
+                            '20%, 24%, 55%': { textShadow: 'none' }
+                        },
+                        'text-scroll': {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .neon-border {
+            box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff, inset 0 0 5px #0ff;
+        }
+        
+        .neon-border-pink {
+            box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff, inset 0 0 5px #ff00ff;
+        }
+        
+        .neon-border-green {
+            box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00, inset 0 0 5px #00ff00;
+        }
+        
+        .cyberpunk-pattern {
+            background-image: 
+                radial-gradient(#ff00de11 2px, transparent 2px),
+                radial-gradient(#00ffff11 2px, transparent 2px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        
+        .glitch-effect {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff; }
+            14% { text-shadow: 0.05em 0 0 #00fffc, -0.05em -0.025em 0 #fc00ff; }
+            15% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff; }
+            49% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff; }
+            50% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff; }
+            99% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff; }
+            100% { text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff; }
+        }
+        
+        .scanline {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 255, 255, 0.05) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AcaEgQN86e3hwAAAWhJREFUaN7tmcERgyAQRY1TgCVYgiVQgiVYgiVQgmM7sQNLsIRkNjPOgTgHUfA/M9+YDJo8lrBLxH+JiCwi8lj+bMkHaQFGgOiODpIB+RNQmBL5Cdv6ZQsQP5w6wBfhVlsJePUcJOoAxDJkl7WOZM652Tolcg5zTtKRDUCOEAJgIlXKUG8gCSB7kI/diVQpEK1DTLyQiNCdSJViCWQnJHBw2A6hSuWswXXz0V7I6oYYw+QgWzdEE6Yz1NsiJhFpJ/b4Q01hupFAItc4+GW1IobJ+r/vhmiHyUJDjGFiXUZsQTRhuuaGaMJcikCM1pQT9qw3RBtGNB9tLVUa8o6+0qx5X38GYaXcECYLFTFIbxH9iw21SZuzBlf0hljDiPpKs4a+GV4SYg0j6nfEWvpOJUSkndnje6xheggVMUgXBrO8BBNpZIkXMbEgYzjRFbEGSWEVsQ5DmRkrYh2GMmueoAcXTISNfQFBVOe9DJLW4gAAAABJRU5ErkJggg==');
+            background-size: 50px;
+            opacity: 0.1;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .image-glitch {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-glitch::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            background-position: inherit;
+            background-size: inherit;
+            transform: translateX(5px);
+            opacity: 0.3;
+            mix-blend-mode: hard-light;
+            z-index: 1;
+            animation: glitch-animation 2s infinite linear alternate;
+        }
+
+        @keyframes glitch-animation {
+            0% { transform: translateX(0); opacity: 0.2; }
+            20% { transform: translateX(-5px); opacity: 0.3; }
+            40% { transform: translateX(5px); opacity: 0.2; }
+            60% { transform: translateX(-2px); opacity: 0.3; }
+            80% { transform: translateX(2px); opacity: 0.2; }
+            100% { transform: translateX(0); opacity: 0.3; }
+        }
+
+        .terminal-text {
+            overflow: hidden;
+            border-right: 0.15em solid #0ff;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.1em;
+            animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #0ff }
+        }
+
+        .matrix-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-chars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-deepBlue text-white font-sans relative">
+    <div class="noise"></div>
+    <div class="scanline"></div>
+    
+    <!-- Navbar -->
+    <nav class="relative z-20 bg-darkBlue/80 backdrop-blur-sm border-b border-neonBlue/30">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="flex items-center space-x-2">
+                    <span class="text-neonBlue">≫</span>
+                    <span class="font-orbitron text-2xl text-white animate-glow">Preload</span>
+                </a>
+                
+                <!-- Desktop menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-white hover:text-neonBlue transition-colors">HOME</a>
+                    <a href="#projects" class="text-white hover:text-neonBlue transition-colors">PROJECTS</a>
+                    <a href="#about" class="text-white hover:text-neonBlue transition-colors">ABOUT</a>
+                    <a href="#writing" class="text-white hover:text-neonBlue transition-colors">BLOG</a>
+                    <a href="#contact" class="text-white hover:text-neonBlue transition-colors">CONTACT</a>
+                    <a href="tel:+34912123123" class="text-neonGreen font-orbitron ml-8">+34 912 123 123</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <i class="bi bi-list text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden pb-4 pt-2 space-y-3" id="mobile-menu">
+                <a href="#" class="block py-2 text-white hover:text-neonBlue transition-colors">HOME</a>
+                <a href="#projects" class="block py-2 text-white hover:text-neonBlue transition-colors">PROJECTS</a>
+                <a href="#about" class="block py-2 text-white hover:text-neonBlue transition-colors">ABOUT</a>
+                <a href="#writing" class="block py-2 text-white hover:text-neonBlue transition-colors">BLOG</a>
+                <a href="#contact" class="block py-2 text-white hover:text-neonBlue transition-colors">CONTACT</a>
+                <a href="tel:+34912123123" class="block py-2 text-neonGreen font-orbitron">+34 912 123 123</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Marquee Text -->
+    <div class="bg-gradient-to-r from-neonPink/20 to-neonBlue/20 py-2 overflow-hidden whitespace-nowrap">
+        <div class="animate-text-scroll inline-block">
+            <span class="font-orbitron text-sm md:text-base tracking-wider">
+                ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★ INNOVATIVE SOLUTIONS ★
+            </span>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center cyberpunk-pattern bg-darkBlue">
+        <div class="container mx-auto px-4 md:px-8 py-16 md:py-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h1 class="font-orbitron text-5xl md:text-7xl font-bold mb-6 glitch-effect">
+                        PATRICK<br>FISHER
+                    </h1>
+                    <div class="bg-black/50 backdrop-blur-sm p-6 border border-neonBlue/30 mb-8">
+                        <p class="text-lg mb-4 terminal-text">
+                            I specialize in crafting online spaces that stand the test of time. I utilize
+                            innovative design solutions that cater to your unique needs.
+                        </p>
+                    </div>
+                    <a href="#contact" class="inline-block bg-transparent border-2 border-neonGreen text-neonGreen hover:bg-neonGreen hover:text-darkBlue font-orbitron py-3 px-8 transition-colors duration-300 neon-border-green">
+                        SAY HELLO!
+                    </a>
+                </div>
+                
+                <div class="order-1 md:order-2 relative">
+                    <div class="image-glitch rounded-lg overflow-hidden border-2 border-neonBlue/50 neon-border relative">
+                        <img src="https://images.unsplash.com/photo-1566837809693-bb1a7cb5a5c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" alt="Cyberpunk Portrait" class="w-full h-full object-cover filter hue-rotate-180 saturate-200">
+                        <div class="absolute bottom-0 right-0 bg-black/70 backdrop-blur-sm py-1 px-3 font-mono text-xs text-neonGreen">
+                            MATTHEW 11.28
+                            <div class="inline-block ml-2 w-16 border-t border-neonGreen"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="relative bg-deepBlue py-20 md:py-32">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-16 text-center animate-neon-flicker">WHO I AM</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="image-glitch rounded-lg overflow-hidden border-2 border-neonPink/50 neon-border-pink matrix-effect">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" alt="Cyberpunk Workspace" class="w-full h-full object-cover">
+                    <div class="matrix-chars" id="matrix-effect-1"></div>
+                </div>
+                
+                <div class="bg-black/40 backdrop-blur-sm p-6 md:p-8 border border-neonBlue/30">
+                    <h3 class="font-orbitron text-neonPink text-2xl mb-4">Digital Craftsman</h3>
+                    <p class="mb-4">I'm a digital nomad navigating the cybernetic frontier, specializing in crafting immersive digital experiences that blur the line between reality and the virtual world.</p>
+                    <p class="mb-4">With over a decade in the digital underground, I've mastered the art of developing bleeding-edge solutions that not only meet current needs but anticipate the requirements of tomorrow.</p>
+                    <p>My approach combines technical precision with artistic vision, creating digital environments that are both functional and visually stunning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="relative bg-darkBlue py-20 md:py-32 cyberpunk-pattern">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-16 text-center animate-neon-flicker">WHAT I DO</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="bg-black/40 backdrop-blur-sm p-6 md:p-8 border border-neonGreen/30 order-2 md:order-1">
+                    <h3 class="font-orbitron text-neonGreen text-2xl mb-4">Technical Expertise</h3>
+                    <p class="mb-4">I specialize in developing cutting-edge websites and applications that push the boundaries of what's possible in the digital realm.</p>
+                    <p class="mb-4">My expertise includes:</p>
+                    <ul class="space-y-2 mb-4">
+                        <li class="flex items-center"><span class="text-neonBlue mr-2">></span> Advanced front-end development with focus on immersive UX</li>
+                        <li class="flex items-center"><span class="text-neonBlue mr-2">></span> Secure back-end systems built for scale and reliability</li>
+                        <li class="flex items-center"><span class="text-neonBlue mr-2">></span> Neural interface optimizations for next-gen digital experiences</li>
+                        <li class="flex items-center"><span class="text-neonBlue mr-2">></span> Quantum-resistant encryption implementation</li>
+                    </ul>
+                    <p>I don't just build websites—I create digital ecosystems that evolve with your needs.</p>
+                </div>
+                
+                <div class="image-glitch rounded-lg overflow-hidden border-2 border-neonGreen/50 neon-border-green matrix-effect order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" alt="Cyberpunk Technology" class="w-full h-full object-cover">
+                    <div class="matrix-chars" id="matrix-effect-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="relative bg-deepBlue py-20 md:py-32">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-16 text-center animate-neon-flicker">PROJECTS</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card 1 -->
+                <div class="group bg-darkBlue border border-neonBlue/30 hover:border-neonBlue transition-all duration-300">
+                    <div class="image-glitch aspect-video w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" 
+                             alt="NeuroCorp Interface" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-orbitron text-neonBlue text-xl mb-2">NeuroCorp Interface</h3>
+                        <p class="text-gray-300 mb-4">Full-stack development for next-gen brain-computer interface dashboard.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-neonBlue/10 text-neonBlue px-2 py-1">Neural UX</span>
+                            <span class="text-xs bg-neonGreen/10 text-neonGreen px-2 py-1">React</span>
+                            <span class="text-xs bg-neonPink/10 text-neonPink px-2 py-1">Python</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="group bg-darkBlue border border-neonBlue/30 hover:border-neonBlue transition-all duration-300">
+                    <div class="image-glitch aspect-video w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" 
+                             alt="Cyberdyne Systems" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-orbitron text-neonGreen text-xl mb-2">Cyberdyne Systems</h3>
+                        <p class="text-gray-300 mb-4">Biometric security system with holographic UI for corporate headquarters.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-neonBlue/10 text-neonBlue px-2 py-1">Holo UI</span>
+                            <span class="text-xs bg-neonGreen/10 text-neonGreen px-2 py-1">Angular</span>
+                            <span class="text-xs bg-neonPink/10 text-neonPink px-2 py-1">Go</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="group bg-darkBlue border border-neonBlue/30 hover:border-neonBlue transition-all duration-300">
+                    <div class="image-glitch aspect-video w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544652478-6653e09f18a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=80" 
+                             alt="NightCity Marketplace" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-orbitron text-neonPink text-xl mb-2">NightCity Marketplace</h3>
+                        <p class="text-gray-300 mb-4">Decentralized marketplace with advanced cryptographic transaction system.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-neonBlue/10 text-neonBlue px-2 py-1">Blockchain</span>
+                            <span class="text-xs bg-neonGreen/10 text-neonGreen px-2 py-1">Vue</span>
+                            <span class="text-xs bg-neonPink/10 text-neonPink px-2 py-1">Rust</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-block bg-transparent border-2 border-neonBlue text-neonBlue hover:bg-neonBlue hover:text-darkBlue font-orbitron py-3 px-8 transition-colors duration-300">
+                    VIEW ALL PROJECTS
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Writing Section -->
+    <section id="writing" class="relative bg-darkBlue py-20 md:py-32 cyberpunk-pattern">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-16 text-center animate-neon-flicker">WRITING</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <div class="bg-black/40 backdrop-blur-sm border border-neonPink/30 hover:border-neonPink transition-all duration-300">
+                    <div class="p-6">
+                        <div class="text-neonPink font-mono mb-2">01.22.2077</div>
+                        <h3 class="font-orbitron text-white text-xl mb-3">The Future of Neural Interfaces in Web Design</h3>
+                        <p class="text-gray-300 mb-4">Exploring how brain-computer interfaces will transform the way we interact with digital environments...</p>
+                        <a href="#" class="flex items-center font-orbitron text-neonPink hover:underline">
+                            READ MORE <i class="bi bi-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Article 2 -->
+                <div class="bg-black/40 backdrop-blur-sm border border-neonBlue/30 hover:border-neonBlue transition-all duration-300">
+                    <div class="p-6">
+                        <div class="text-neonBlue font-mono mb-2">03.17.2077</div>
+                        <h3 class="font-orbitron text-white text-xl mb-3">Quantum Computing: Implications for Cybersecurity</h3>
+                        <p class="text-gray-300 mb-4">How quantum computing is reshaping our approach to encryption and digital security protocols...</p>
+                        <a href="#" class="flex items-center font-orbitron text-neonBlue hover:underline">
+                            READ MORE <i class="bi bi-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Article 3 -->
+                <div class="bg-black/40 backdrop-blur-sm border border-neonGreen/30 hover:border-neonGreen transition-all duration-300">
+                    <div class="p-6">
+                        <div class="text-neonGreen font-mono mb-2">05.04.2077</div>
+                        <h3 class="font-orbitron text-white text-xl mb-3">Holographic UIs: Beyond the Screen</h3>
+                        <p class="text-gray-300 mb-4">The evolution of user interfaces from 2D screens to immersive holographic environments...</p>
+                        <a href="#" class="flex items-center font-orbitron text-neonGreen hover:underline">
+                            READ MORE <i class="bi bi-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-block bg-transparent border-2 border-neonBlue text-neonBlue hover:bg-neonBlue hover:text-darkBlue font-orbitron py-3 px-8 transition-colors duration-300">
+                    VIEW ALL ARTICLES
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="relative bg-deepBlue py-20 md:py-32">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="font-orbitron text-4xl md:text-5xl font-bold mb-16 text-center animate-neon-flicker">CONTACT ME</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="bg-black/40 backdrop-blur-sm p-8 border border-neonBlue/30">
+                    <h3 class="font-orbitron text-neonBlue text-2xl mb-6">Get In Touch</h3>
+                    <p class="mb-8">Ready to elevate your digital presence? Reach out and let's create something extraordinary together.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <i class="bi bi-geo-alt text-neonPink text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-orbitron text-white mb-1">Location</h4>
+                                <p class="text-gray-300">Night City, North California</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <i class="bi bi-envelope text-neonGreen text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-orbitron text-white mb-1">Email</h4>
+                                <p class="text-gray-300">patrick@cyberfisher.net</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <i class="bi bi-phone text-neonBlue text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-orbitron text-white mb-1">Phone</h4>
+                                <p class="text-gray-300">+34 912 123 123</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4 mt-8">
+                        <a href="#" class="w-10 h-10 rounded-full bg-neonBlue/20 flex items-center justify-center text-neonBlue hover:bg-neonBlue hover:text-darkBlue transition-colors">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-neonPink/20 flex items-center justify-center text-neonPink hover:bg-neonPink hover:text-darkBlue transition-colors">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-neonGreen/20 flex items-center justify-center text-neonGreen hover:bg-neonGreen hover:text-darkBlue transition-colors">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-darkBlue transition-colors">
+                            <i class="bi bi-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-black/40 backdrop-blur-sm p-8 border border-neonGreen/30">
+                    <h3 class="font-orbitron text-neonGreen text-2xl mb-6">Send Message</h3>
+                    
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-2 font-orbitron">Name</label>
+                            <input type="text" id="name" name="name" class="w-full bg-darkBlue border border-neonGreen/30 focus:border-neonGreen text-white p-3 outline-none" required>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-2 font-orbitron">Email</label>
+                            <input type="email" id="email" name="email" class="w-full bg-darkBlue border border-neonGreen/30 focus:border-neonGreen text-white p-3 outline-none" required>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2 font-orbitron">Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full bg-darkBlue border border-neonGreen/30 focus:border-neonGreen text-white p-3 outline-none" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-transparent border-2 border-neonGreen text-neonGreen hover:bg-neonGreen hover:text-darkBlue font-orbitron py-3 transition-colors duration-300">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-darkBlue border-t border-neonBlue/30 py-10">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="flex items-center space-x-2">
+                        <span class="text-neonBlue">≫</span>
+                        <span class="font-orbitron text-xl text-white">Preload</span>
+                    </a>
+                    <p class="text-gray-400 mt-2">Crafting digital futures since 2077</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-neonBlue transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-300 hover:text-neonBlue transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-300 hover:text-neonBlue transition-colors">© 2077 Patrick Fisher</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would normally send the form data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message (simple alert for demo)
+            alert(`Thanks ${name}! Your message has been sent successfully.`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Matrix effect
+        function createMatrixEffect(elementId) {
+            const canvas = document.createElement('canvas');
+            const container = document.getElementById(elementId);
+            if (!container) return;
+            
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+
+            // Make canvas full size of container
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+            const charArray = chars.split('');
+            const fontSize = 12;
+            const columns = canvas.width / fontSize;
+            
+            // Array to track the y position of each column
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+            }
+
+            function draw() {
+                // Semi-transparent black to create fade effect
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Green text
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                // Loop through each drop
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    
+                    // Draw the character
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move the drop down
+                    drops[i]++;
+                    
+                    // Reset if drop reaches bottom or randomly to create varied effect
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = Math.floor(Math.random() * -20);
+                    }
+                }
+                
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
+
+        // Initialize matrix effects
+        window.addEventListener('load', function() {
+            createMatrixEffect('matrix-effect-1');
+            createMatrixEffect('matrix-effect-2');
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
